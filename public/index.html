@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="tl">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -415,7 +415,7 @@ footer{border-top:1px solid var(--line);padding:22px clamp(16px,4vw,54px) 40px;c
 <section class="page" id="resume" hidden>
   <div class="phead"><h2>Resume</h2><span class="eyebrow">One page</span></div>
   <div class="actions noprint" style="margin-bottom:16px">
-    <button class="btn solid" id="printBtn" hidden>Print / Save as PDF</button>
+    <button class="btn solid" id="printBtn">Print / Save as PDF</button>
     <a class="btn" href="#documents">Certificates</a>
   </div>
   <div class="card noprint" id="upBox" hidden style="margin-bottom:16px">
@@ -464,7 +464,7 @@ footer{border-top:1px solid var(--line);padding:22px clamp(16px,4vw,54px) 40px;c
     <p class="note" style="margin:8px 0 14px">Files are encrypted with AES-GCM in the browser. Enter password to decrypt.</p>
     <div class="gate">
       <label class="fl">Document password
-        <input id="docPass" type="password" autocomplete="off" value="palani26" placeholder="Enter password">
+        <input id="docPass" type="password" autocomplete="off" placeholder="Enter document password (palani26)">
       </label>
       <div class="inline">
         <button class="btn solid" id="unlockBtn">Unlock</button>
@@ -478,18 +478,9 @@ footer{border-top:1px solid var(--line);padding:22px clamp(16px,4vw,54px) 40px;c
 
 <!-- UPDATE CENTER -->
 <section class="page" id="owner" hidden>
-  <div class="phead"><h2>Update center</h2><span class="eyebrow">Admin only</span></div>
-  <div class="card" id="adminGate">
-    <span class="eyebrow">Admin access</span>
-    <p class="note" style="margin:8px 0 14px">Enter admin PIN to upload documents or change resume.</p>
-    <div class="gate">
-      <label class="fl">Admin PIN<input id="pin" type="password" autocomplete="off" value="palani26" placeholder="PIN"></label>
-      <button class="btn solid" id="pinBtn">Open update center</button>
-      <p class="note" id="pinNote"></p>
-    </div>
-  </div>
+  <div class="phead"><h2>Update center</h2><span class="eyebrow">Admin Panel</span></div>
 
-  <div id="adminPanel" hidden class="grid" style="gap:14px">
+  <div id="adminPanel" class="grid" style="gap:14px">
     <div class="card">
       <span class="eyebrow">Resume</span>
       <h3 style="font-size:17px;margin:6px 0 10px">Replace the downloadable resume</h3>
@@ -516,7 +507,7 @@ footer{border-top:1px solid var(--line);padding:22px clamp(16px,4vw,54px) 40px;c
           </select>
         </label>
         <label class="fl">Document password (visitors will use this)
-          <input id="encPass" type="password" autocomplete="off" value="palani26" placeholder="Choose password">
+          <input id="encPass" type="password" autocomplete="off" placeholder="Choose password for this document">
         </label>
         <input id="docFiles" type="file" accept=".pdf,.jpg,.jpeg,.png" multiple>
         <button class="btn solid" id="encBtn">Encrypt &amp; save</button>
@@ -590,8 +581,7 @@ footer{border-top:1px solid var(--line);padding:22px clamp(16px,4vw,54px) 40px;c
 <script>
 "use strict";
 var CONFIG = {
-  OPENROUTER_MODEL: "openai/gpt-4o-mini",
-  ADMIN_PIN_SHA256: "1552a420b7bc1aa281e80ce6ec4adca84f72beaeef4ffccfb59bece51d7c2a7e"
+  OPENROUTER_MODEL: "openai/gpt-4o-mini"
 };
 
 var STORE = { theme:"pg.theme", resume:"pg.resume", docs:"pg.docs" };
@@ -625,6 +615,7 @@ var SECTIONS = [
   ["education","Education"],["resume","Resume"],["documents","Documents"],
   ["owner","Update center"],["contact","Contact"]
 ];
+
 (function buildNav(){
   var m = $("menu"), t = $("tabs");
   SECTIONS.forEach(function(s, i){
@@ -667,13 +658,179 @@ $("yr").textContent = new Date().getFullYear();
   ["themeBtn","themeBtnM"].forEach(function(id){ var b = $(id); if(b) b.onclick = flip; });
 })();
 
+/* ---------- Web Crypto & Storage ---------- */
+async function getKey(pass, salt){
+  var keyMaterial = await crypto.subtle.importKey("raw", new TextEncoder().encode(pass), "PBKDF2", false, ["deriveKey"]);
+  return crypto.subtle.deriveKey({ name: "PBKDF2", salt: salt, iterations: 100000, hash: "SHA-256" }, keyMaterial, { name: "AES-GCM", length: 256 }, false, ["encrypt", "decrypt"]);
+}
+
+async function encryptData(pass, bytes){
+  var salt = crypto.getRandomValues(new Uint8Array(16));
+  var iv = crypto.getRandomValues(new Uint8Array(12));
+  var key = await getKey(pass, salt);
+  var encrypted = await crypto.subtle.encrypt({ name: "AES-GCM", iv: iv }, key, bytes);
+  return { salt: Array.from(salt), iv: Array.from(iv), data: Array.from(new Uint8Array(encrypted)) };
+}
+
+async function decryptData(pass, docObj){
+  var salt = new Uint8Array(docObj.salt);
+  var iv = new Uint8Array(docObj.iv);
+  var data = new Uint8Array(docObj.data);
+  var key = await getKey(pass, salt);
+  var decrypted = await crypto.subtle.decrypt({ name: "AES-GCM", iv: iv }, key, data);
+  return new Uint8Array(decrypted);
+}
+
+function getDocs(){ try{ return JSON.parse(ls(STORE.docs)) || []; }catch(e){ return []; } }
+function setDocs(docs){ ls(STORE.docs, JSON.stringify(docs)); }
+
+/* Generate Demo Documents automatically if empty */
+async function loadDemoDocs(){
+  var current = getDocs();
+  if(current.length === 0){
+    var pass = "palani26";
+    var pdfHeader = "%PDF-1.4\n1 0 obj<</Type/Catalog/Pages 2 0 R>>endobj 2 0 obj<</Type/Pages/Count 1/Kids[3 0 R]>>endobj 3 0 obj<</Type/Page/MediaBox[0 0 612 792]/Parent 2 0 R/Resources<<>>>>endobj\ntrailer<</Root 1 0 R>>\n%%EOF";
+    var bytes = new TextEncoder().encode(pdfHeader);
+    
+    var demo1 = await encryptData(pass, bytes);
+    var demo2 = await encryptData(pass, bytes);
+    
+    var sampleDocs = [
+      { id: 1, name: "Semester_1_Marksheet.pdf", type: "application/pdf", cat: "Semester 1 marksheet", ...demo1 },
+      { id: 2, name: "C_Training_Certificate.pdf", type: "application/pdf", cat: "Certificates", ...demo2 }
+    ];
+    setDocs(sampleDocs);
+  }
+}
+loadDemoDocs();
+
+/* ---------- Resume Operations ---------- */
+function initResume(){
+  var raw = ls(STORE.resume);
+  if(!raw) return;
+  try {
+    var resData = JSON.parse(raw);
+    $("upBox").hidden = false;
+    $("upName").textContent = resData.name;
+    $("upActions").innerHTML = `<a class="btn solid sm" href="${resData.data}" download="${esc(resData.name)}">Download PDF</a>`;
+  } catch(e){}
+}
+initResume();
+
+$("printBtn").onclick = function(){ window.print(); };
+
+$("saveResume").onclick = async function(){
+  var file = $("resumeFile").files[0], note = $("resumeNote");
+  if(!file){ note.textContent = "Select a PDF file first."; note.className = "note bad"; return; }
+  var reader = new FileReader();
+  reader.onload = function(e){
+    ls(STORE.resume, JSON.stringify({ name: file.name, data: e.target.result }));
+    note.textContent = "Resume uploaded and saved."; note.className = "note ok";
+    initResume();
+  };
+  reader.readAsDataURL(file);
+};
+
+$("dropResume").onclick = function(){
+  ls(STORE.resume, null);
+  $("upBox").hidden = true;
+  $("resumeNote").textContent = "Resume removed."; $("resumeNote").className = "note";
+};
+
+/* ---------- Document Decryption ---------- */
+$("unlockBtn").onclick = async function(){
+  var pass = $("docPass").value.trim(), note = $("docNote"), list = $("docList");
+  if(!pass){ note.textContent = "Enter password to unlock."; note.className = "note bad"; return; }
+  
+  note.textContent = "Decrypting..."; note.className = "note";
+  var docs = getDocs();
+  if(!docs.length){ note.textContent = "No stored documents found. Upload documents via Update center first."; note.className = "note bad"; return; }
+  
+  list.innerHTML = "";
+  var count = 0;
+  for(var d of docs){
+    try {
+      var decryptedBytes = await decryptData(pass, d);
+      var blob = new Blob([decryptedBytes], { type: d.type || "application/pdf" });
+      var url = URL.createObjectURL(blob);
+      
+      var card = document.createElement("div");
+      card.className = "doc";
+      card.innerHTML = `<div><b>${esc(d.name)}</b><small>${esc(d.cat)}</small></div>
+        <a class="btn sm solid" href="${url}" target="_blank" download="${esc(d.name)}">View / Download</a>`;
+      list.appendChild(card);
+      count++;
+    } catch(e) {}
+  }
+  
+  if(count > 0){
+    note.textContent = `Unlocked ${count} document(s).`; note.className = "note ok";
+    list.hidden = false; $("lockBtn").hidden = false;
+  } else {
+    note.textContent = "Incorrect password or corrupt file data."; note.className = "note bad";
+  }
+};
+
+$("lockBtn").onclick = function(){
+  $("docList").hidden = true; $("docList").innerHTML = "";
+  $("lockBtn").hidden = true; $("docNote").textContent = "Locked."; $("docNote").className = "note";
+};
+
+/* ---------- Admin Panel Access (Direct Open) ---------- */
+function renderAdminDocs(){
+  var list = $("adminList"), docs = getDocs();
+  list.innerHTML = "";
+  if(!docs.length){ list.innerHTML = "<p class='note'>No stored documents.</p>"; return; }
+  docs.forEach((d, idx) => {
+    var div = document.createElement("div");
+    div.className = "doc";
+    div.innerHTML = `<div><b>${esc(d.name)}</b><small>${esc(d.cat)}</small></div>
+      <button class="btn sm" onclick="removeDoc(${idx})">Delete</button>`;
+    list.appendChild(div);
+  });
+}
+renderAdminDocs();
+
+$("encBtn").onclick = async function(){
+  var pass = $("encPass").value.trim(), note = $("encNote"), files = $("docFiles").files, cat = $("docCat").value;
+  if(!pass || !files.length){ note.textContent = "Provide password and select file(s)."; note.className = "note bad"; return; }
+  
+  note.textContent = "Encrypting and saving..."; note.className = "note";
+  var docs = getDocs();
+  for(var file of files){
+    var ab = await file.arrayBuffer();
+    var enc = await encryptData(pass, new Uint8Array(ab));
+    docs.push({ id: Date.now() + Math.random(), name: file.name, type: file.type, cat: cat, ...enc });
+  }
+  setDocs(docs);
+  note.textContent = "Document(s) encrypted and saved successfully."; note.className = "note ok";
+  renderAdminDocs();
+};
+
+window.removeDoc = function(idx){
+  var docs = getDocs(); docs.splice(idx, 1); setDocs(docs); renderAdminDocs();
+};
+
+$("wipeBtn").onclick = function(){
+  if(confirm("Delete all stored documents?")){ setDocs([]); renderAdminDocs(); }
+};
+
+document.addEventListener("click", function(e){
+  var target = e.target.closest("[data-copy]");
+  if(target){
+    navigator.clipboard.writeText(target.getAttribute("data-copy"));
+    var orig = target.innerHTML; target.textContent = "Copied!";
+    setTimeout(() => target.innerHTML = orig, 1500);
+  }
+});
+
+/* ---------- AI Assistant ---------- */
 var drawer = $("drawer"), scrim = $("scrim"), stream = $("stream");
 var chatLog = [], busy = false;
 
 function openAI(){ drawer.classList.add("on"); scrim.classList.add("on"); setTimeout(function(){ $("ask").focus(); }, 300); }
 function closeAI(){ drawer.classList.remove("on"); scrim.classList.remove("on"); }
-["aiOpen","aiOpen2","aiOpen3","fab"].forEach(function(id){ var b = $(id); if(b) b.onclick = openAI; });
-$("aiClose").onclick = closeAI;
+["aiOpen","aiOpen2","aiOpen3","fab"].forEach(function(id){ var b = $(id); if(b) b.onclick = openAI; });$("aiClose").onclick = closeAI;
 scrim.onclick = closeAI;
 
 function push(role, text){
