@@ -1,0 +1,742 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Palanivel G - final-year B.Sc Computer Technology student in Coimbatore. Skills, StudyFlow project, resume and certificates.">
+<meta name="theme-color" content="#F2A516">
+<script>window.PORTFOLIO_STANDALONE = true;</script>
+<title>Palanivel G</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+:root{
+  --bg:#F6F7F8; --surface:#FFFFFF; --surface-2:#ECEEF1; --surface-3:#E2E6EA;
+  --ink:#11151A; --muted:#5A6472; --line:#DCE0E5;
+  --accent:#F2A516; --accent-ink:#1A1206; --accent-soft:#FFF3DA;
+  --good:#0E7C66; --danger:#B3331C;
+  --display:"Bricolage Grotesque","Trebuchet MS",system-ui,sans-serif;
+  --body:"Instrument Sans","Helvetica Neue",Arial,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --rail:252px; --shadow:0 1px 2px rgba(17,21,26,.05),0 12px 32px -18px rgba(17,21,26,.25);
+  --radius:14px;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0B0D10; --surface:#14171B; --surface-2:#1B1F25; --surface-3:#242A31;
+  --ink:#F1F3F5; --muted:#9BA5B2; --line:#262C33;
+  --accent:#FFB92E; --accent-ink:#19120A; --accent-soft:#2A2008;
+  --good:#38C9A8; --danger:#FF7A5C;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 18px 40px -20px rgba(0,0,0,.8);
+  color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#0B0D10; --surface:#14171B; --surface-2:#1B1F25; --surface-3:#242A31;
+  --ink:#F1F3F5; --muted:#9BA5B2; --line:#262C33;
+  --accent:#FFB92E; --accent-ink:#19120A; --accent-soft:#2A2008;
+  --good:#38C9A8; --danger:#FF7A5C;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 18px 40px -20px rgba(0,0,0,.8);
+  color-scheme:dark;
+}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 var(--body);overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+h1,h2,h3{font-family:var(--display);font-weight:800;letter-spacing:-.02em;text-wrap:balance;margin:0}
+p{margin:0}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
+.eyebrow{font:600 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.muted{color:var(--muted)}
+.num{font-variant-numeric:tabular-nums}
+
+/* ---------- rail ---------- */
+.rail{position:fixed;z-index:40;inset:0 auto 0 0;width:var(--rail);background:var(--surface);
+  border-right:1px solid var(--line);display:flex;flex-direction:column;gap:18px;
+  padding:calc(22px + env(safe-area-inset-top,0px)) 14px calc(16px + env(safe-area-inset-bottom,0px))}
+.brand{padding:0 8px;display:grid;gap:4px}
+.brand .mark{display:flex;align-items:center;gap:9px}
+.brand .dot{width:26px;height:26px;border-radius:8px;background:var(--accent);color:var(--accent-ink);
+  font:800 13px/26px var(--display);text-align:center;flex:none}
+.brand b{font-family:var(--display);font-size:18px;letter-spacing:-.01em}
+.brand small{color:var(--muted);font-size:11.5px;line-height:1.4;display:block}
+.menu{display:flex;flex-direction:column;gap:2px;overflow:auto;flex:1;min-height:0}
+.menu a{display:flex;align-items:center;gap:10px;padding:9px 11px;border-radius:10px;color:var(--muted);
+  font-size:14.5px;font-weight:500;transition:background .15s,color .15s}
+.menu a .ix{font:600 10px/1 var(--mono);color:var(--line);min-width:14px}
+.menu a:hover{background:var(--surface-2);color:var(--ink)}
+.menu a[aria-current="page"]{background:var(--accent);color:var(--accent-ink);font-weight:600}
+.menu a[aria-current="page"] .ix{color:var(--accent-ink);opacity:.55}
+.railfoot{display:grid;gap:8px}
+
+/* ---------- mobile header ---------- */
+.mhead{display:none;position:sticky;top:env(safe-area-inset-top,0px);z-index:40;background:var(--surface);
+  border-bottom:1px solid var(--line)}
+.mhead .row{display:flex;align-items:center;gap:8px;padding:9px 14px}
+.mhead .tabs{display:flex;gap:4px;overflow-x:auto;padding:0 10px 8px;scrollbar-width:none}
+.mhead .tabs::-webkit-scrollbar{display:none}
+.mhead .tabs a{flex:none;padding:7px 12px;border-radius:999px;font-size:13px;font-weight:600;color:var(--muted);background:var(--surface-2)}
+.mhead .tabs a[aria-current="page"]{background:var(--accent);color:var(--accent-ink)}
+
+/* ---------- buttons ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;cursor:pointer;
+  font:600 14px/1 var(--body);padding:11px 15px;border-radius:11px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);transition:background .15s,border-color .15s,transform .1s}
+.btn:hover{background:var(--surface-2)}
+.btn:active{transform:translateY(1px)}
+.btn.solid{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.solid:hover{filter:brightness(1.06)}
+.btn.sm{padding:8px 11px;font-size:13px;border-radius:9px}
+.btn.wide{width:100%}
+.btn[disabled]{opacity:.5;cursor:not-allowed}
+input,select,textarea{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);
+  border-radius:10px;padding:10px 12px;width:100%;max-width:100%}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--accent);outline-offset:1px}
+label.fl{display:grid;gap:6px;font:600 12px/1.3 var(--body);color:var(--muted)}
+
+/* ---------- main ---------- */
+main{margin-left:var(--rail)}
+.page{padding:clamp(28px,5vw,62px) clamp(16px,4vw,54px) 84px;max-width:1080px}
+.page[hidden]{display:none}
+.phead{display:flex;align-items:baseline;justify-content:space-between;gap:16px;
+  border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:26px}
+h2{font-size:clamp(28px,4.4vw,42px);line-height:1.05}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:20px}
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(190px,1fr))}
+
+/* hero */
+.hero{display:grid;gap:18px}
+.hero h1{font-size:clamp(42px,9vw,76px);line-height:.92;letter-spacing:-.04em}
+.hero .role{font:500 clamp(17px,2.4vw,22px)/1.3 var(--display);color:var(--accent)}
+.hero .intro{max-width:58ch;color:var(--muted);font-size:16.5px}
+.actions{display:flex;flex-wrap:wrap;gap:9px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:8px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 15px}
+.stat b{display:block;font:800 26px/1.1 var(--display);letter-spacing:-.03em}
+.stat span{font:600 11px/1.3 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.ticker{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font:600 11.5px/1 var(--mono);color:var(--muted)}
+.ticker i{width:7px;height:7px;border-radius:50%;background:var(--good);flex:none}
+
+/* facts */
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:1px;background:var(--line);
+  border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.fact{background:var(--surface);padding:13px 14px;min-width:0}
+.fact small{display:block;font:600 10px/1.4 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.fact b{font-weight:600;font-size:14.5px;word-break:break-word}
+.copy{display:inline-flex;align-items:center;gap:6px;cursor:pointer;background:none;border:0;padding:0;
+  color:inherit;font:inherit;text-align:left}
+.copy u{text-decoration:none;border-bottom:1px dashed var(--line)}
+.copy:hover u{border-color:var(--accent)}
+
+/* skills */
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font:600 13px/1 var(--body);padding:9px 13px;border-radius:9px;background:var(--surface-2);border:1px solid var(--line)}
+.chip.hot{background:var(--accent-soft);border-color:var(--accent)}
+.lvl{display:grid;gap:9px;margin-top:4px}
+.lvl .row{display:grid;gap:5px}
+.lvl .top{display:flex;justify-content:space-between;font-size:13.5px;font-weight:600}
+.lvl .top span{color:var(--muted);font:600 11px/1.4 var(--mono);letter-spacing:.06em;text-transform:uppercase}
+.meter{height:6px;border-radius:99px;background:var(--surface-2);overflow:hidden}
+.meter i{display:block;height:100%;background:var(--accent)}
+
+/* project + timeline */
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.tags span{font:600 11px/1 var(--mono);letter-spacing:.04em;padding:6px 9px;border-radius:7px;background:var(--surface-2);color:var(--muted)}
+.feature{display:grid;gap:14px}
+.feature h3{font-size:clamp(22px,3.4vw,30px)}
+.bullets{display:grid;gap:8px;margin:0;padding:0;list-style:none}
+.bullets li{display:flex;gap:9px;font-size:14.5px;color:var(--muted)}
+.bullets li:before{content:"→";color:var(--accent);font-weight:700;flex:none}
+.tl{display:grid;gap:0;position:relative;padding-left:22px}
+.tl:before{content:"";position:absolute;left:4px;top:7px;bottom:7px;width:2px;background:var(--line)}
+.tl .it{position:relative;padding:0 0 22px}
+.tl .it:last-child{padding-bottom:0}
+.tl .it:before{content:"";position:absolute;left:-22px;top:6px;width:10px;height:10px;border-radius:50%;
+  background:var(--bg);border:2px solid var(--accent)}
+.tl .when{font:600 10.5px/1.4 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.tl h3{font-size:17px;margin:2px 0 2px}
+
+/* resume sheet */
+.sheet{background:#fff;color:#14181d;border:1px solid var(--line);border-radius:12px;
+  padding:clamp(22px,4vw,44px);max-width:820px;box-shadow:var(--shadow)}
+.sheet h1{font-size:clamp(26px,4.6vw,36px);letter-spacing:-.03em;color:#14181d}
+.sheet .meta{font:500 12.5px/1.7 var(--mono);color:#5A6472;margin-top:6px;word-break:break-word}
+.sheet h3{font:600 10.5px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:#8a6a10;
+  border-bottom:1px solid #e3e6ea;padding-bottom:7px;margin:26px 0 10px}
+.sheet p,.sheet li{font-size:13.5px;line-height:1.6;color:#33404f}
+.sheet b{color:#14181d}
+.sheet ul{margin:0;padding-left:18px;display:grid;gap:4px}
+.sheet .two{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
+
+/* locked areas */
+.gate{display:grid;gap:12px;max-width:420px}
+.inline{display:flex;gap:8px;flex-wrap:wrap}
+.inline input{flex:1;min-width:150px}
+.note{font-size:13px;color:var(--muted)}
+.note.ok{color:var(--good)}
+.note.bad{color:var(--danger)}
+.folder{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--surface)}
+.folder>summary{cursor:pointer;padding:12px 14px;font-weight:600;font-size:14px;display:flex;
+  justify-content:space-between;gap:10px;align-items:center;list-style:none}
+.folder>summary::-webkit-details-marker{display:none}
+.folder>summary span{font:600 10.5px/1 var(--mono);color:var(--muted)}
+.folder .inner{padding:0 14px 14px;display:grid;gap:7px}
+.doc{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 12px;
+  background:var(--surface-2);border-radius:10px;min-width:0}
+.doc div{min-width:0}
+.doc b{font-size:13.5px;display:block;overflow-wrap:anywhere}
+.doc small{font:500 10.5px/1.4 var(--mono);color:var(--muted)}
+
+/* ---------- AI drawer ---------- */
+.fab{position:fixed;z-index:50;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));
+  display:none;align-items:center;gap:8px;border-radius:999px;padding:13px 17px;border:0;cursor:pointer;
+  background:var(--accent);color:var(--accent-ink);font:700 14px/1 var(--body);box-shadow:var(--shadow)}
+.scrim{position:fixed;inset:0;z-index:55;background:rgba(8,10,13,.5);opacity:0;pointer-events:none;transition:opacity .2s}
+.scrim.on{opacity:1;pointer-events:auto}
+.ai{position:fixed;z-index:60;top:0;bottom:0;right:0;width:min(430px,100%);display:flex;flex-direction:column;
+  background:var(--surface);border-left:1px solid var(--line);box-shadow:var(--shadow);
+  transform:translateX(102%);transition:transform .26s cubic-bezier(.3,.8,.3,1);
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+.ai.on{transform:none}
+.ai .bar{display:flex;align-items:center;gap:10px;padding:13px 14px;border-bottom:1px solid var(--line);flex:none}
+.ai .bar .t{flex:1;min-width:0}
+.ai .bar b{display:block;font-family:var(--display);font-size:15.5px}
+.ai .bar small{display:block;font:500 11px/1.4 var(--mono);color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.icbtn{flex:none;width:34px;height:34px;display:grid;place-items:center;border-radius:99px;border:1px solid var(--line);
+  background:var(--surface);color:var(--muted);cursor:pointer;font-size:15px;line-height:1}
+.icbtn:hover{background:var(--surface-2);color:var(--ink)}
+.stream{flex:1;min-height:0;overflow:auto;padding:14px;display:flex;flex-direction:column;gap:11px}
+.bub{max-width:88%;padding:10px 13px;border-radius:14px;font-size:14.5px;line-height:1.6;overflow-wrap:anywhere}
+.bub.bot{background:var(--surface-2);border:1px solid var(--line);border-bottom-left-radius:5px;align-self:flex-start}
+.bub.me{background:var(--accent);color:var(--accent-ink);border-bottom-right-radius:5px;align-self:flex-end;font-weight:500}
+.bub.err{background:var(--surface-2);border:1px solid var(--danger);color:var(--danger);align-self:flex-start;font-size:13.5px}
+.bub p{margin:0 0 8px}
+.bub p:last-child{margin:0}
+.bub ul{margin:4px 0;padding-left:18px;display:grid;gap:3px}
+.bub code{font:600 12.5px/1.5 var(--mono);background:var(--surface-3);padding:1px 5px;border-radius:5px}
+.sugg{display:flex;flex-wrap:wrap;gap:7px;padding:0 14px 12px;flex:none}
+.sugg button{cursor:pointer;border:1px dashed var(--line);background:none;color:var(--muted);border-radius:999px;
+  padding:7px 12px;font:500 12.5px/1 var(--body)}
+.sugg button:hover{border-style:solid;border-color:var(--accent);color:var(--ink)}
+.compose{flex:none;border-top:1px solid var(--line);padding:11px 12px;display:flex;gap:8px;align-items:flex-end}
+.compose textarea{resize:none;max-height:120px;min-height:44px;border-radius:12px;line-height:1.45}
+.compose .icbtn{width:44px;height:44px;background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-size:17px}
+.foot{font:500 10.5px/1.4 var(--mono);color:var(--muted);padding:0 14px 10px;flex:none}
+
+footer{border-top:1px solid var(--line);padding:22px clamp(16px,4vw,54px) 40px;color:var(--muted);font-size:13px;
+  display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;margin-left:var(--rail)}
+
+@media (max-width:900px){
+  .rail{display:none}
+  .mhead{display:block}
+  main,footer{margin-left:0}
+  .fab{display:flex}
+  .ai{width:100%;border-left:0}
+  .page{padding-bottom:96px}
+}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+@media print{
+  .rail,.mhead,.ai,.scrim,.fab,footer,.noprint{display:none!important}
+  main{margin:0}
+  .page{padding:0;max-width:none}
+  .page[hidden]{display:none!important}
+  .sheet{border:0;box-shadow:none;padding:0}
+}
+</style>
+</head>
+<body>
+
+<aside class="rail">
+  <div class="brand">
+    <div class="mark"><div class="dot">PG</div><b>Palanivel G</b></div>
+    <small>B.Sc Computer Technology · Coimbatore</small>
+  </div>
+  <nav class="menu" id="menu" aria-label="Sections"></nav>
+  <div class="railfoot">
+    <button class="btn wide" id="aiOpen">Ask Palanivel G</button>
+    <button class="btn wide sm" id="themeBtn">Switch theme</button>
+  </div>
+</aside>
+
+<header class="mhead">
+  <div class="row">
+    <div class="brand" style="flex:1;padding:0"><div class="mark"><div class="dot">PG</div><b>Palanivel G</b></div></div>
+    <button class="icbtn" id="themeBtnM" title="Switch theme" aria-label="Switch theme">◐</button>
+  </div>
+  <div class="tabs" id="tabs"></div>
+</header>
+
+<main>
+
+<!-- HOME -->
+<section class="page" id="home">
+  <div class="hero">
+    <div class="ticker"><i></i> Open to internships and entry-level IT roles · 2026</div>
+    <div>
+      <h1>Palanivel G</h1>
+      <div class="role">Final-year B.Sc Computer Technology student</div>
+    </div>
+    <p class="intro">I study computer technology at Dr.N.G.P. Arts and Science College in Coimbatore. I work mostly in C, SQL and PHP with MySQL, and I built StudyFlow — a Streamlit app that ranks exam subjects by priority so revision starts where it matters.</p>
+    <div class="actions">
+      <a class="btn solid" href="#resume">Read resume</a>
+      <a class="btn" href="#projects">See StudyFlow</a>
+      <button class="btn" id="aiOpen2">Ask Palanivel G</button>
+      <a class="btn" target="_blank" rel="noopener" href="https://www.linkedin.com/in/palanivel-g-954401436">LinkedIn ↗</a>
+    </div>
+    <div class="stats">
+      <div class="stat"><b class="num">67%</b><span>UG aggregate · sem 1–4</span></div>
+      <div class="stat"><b class="num">15 days</b><span>AI internship</span></div>
+      <div class="stat"><b class="num">3</b><span>Certifications</span></div>
+      <div class="stat"><b class="num">1</b><span>Featured project</span></div>
+    </div>
+    <div class="facts" style="margin-top:14px">
+      <div class="fact"><small>Course</small><b>Bachelor of Computer Technology</b></div>
+      <div class="fact"><small>College</small><b>Dr.N.G.P. Arts and Science College</b></div>
+      <div class="fact"><small>Based in</small><b>Coimbatore, Tamil Nadu</b></div>
+      <div class="fact"><small>Languages</small><b>Tamil · English</b></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROFILE -->
+<section class="page" id="about" hidden>
+  <div class="phead"><h2>Profile</h2><span class="eyebrow">About</span></div>
+  <div class="grid g2">
+    <div class="card">
+      <span class="eyebrow">Career objective</span>
+      <p class="muted" style="margin-top:9px">To join a team where I can apply what I know and keep learning on the job. I want practical experience in the IT field and I am ready to start from the ground up — writing queries, fixing bugs, reading other people's code.</p>
+    </div>
+    <div class="card">
+      <span class="eyebrow">What I am working on</span>
+      <ul class="bullets" style="margin-top:9px">
+        <li>Strengthening SQL and database design beyond coursework.</li>
+        <li>Turning StudyFlow into something my classmates actually use.</li>
+        <li>Getting comfortable with Python for small data tasks.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="facts" style="margin-top:14px">
+    <div class="fact"><small>Email</small><b><button class="copy" data-copy="palanivelg.tech@gmail.com"><u>palanivelg.tech@gmail.com</u></button></b></div>
+    <div class="fact"><small>Phone</small><b><button class="copy" data-copy="+919344563908"><u>+91 93445 63908</u></button></b></div>
+    <div class="fact"><small>LinkedIn</small><b><a target="_blank" rel="noopener" href="https://www.linkedin.com/in/palanivel-g-954401436">palanivel-g ↗</a></b></div>
+    <div class="fact"><small>Status</small><b>Final year · available 2026</b></div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="page" id="skills" hidden>
+  <div class="phead"><h2>Skills</h2><span class="eyebrow">What I work with</span></div>
+  <div class="grid g2">
+    <div class="card">
+      <span class="eyebrow">Technical</span>
+      <div class="chips" style="margin:11px 0 16px">
+        <span class="chip hot">C</span><span class="chip hot">SQL</span><span class="chip hot">DBMS</span>
+        <span class="chip hot">PHP</span><span class="chip hot">MySQL</span><span class="chip">Python</span>
+        <span class="chip">Streamlit</span><span class="chip">Pandas</span>
+      </div>
+      <div class="lvl">
+        <div class="row"><div class="top">C<span>Coursework + training</span></div><div class="meter"><i style="width:75%"></i></div></div>
+        <div class="row"><div class="top">SQL &amp; DBMS<span>Queries, joins, schema</span></div><div class="meter"><i style="width:70%"></i></div></div>
+        <div class="row"><div class="top">PHP &amp; MySQL<span>Certified · 70%</span></div><div class="meter"><i style="width:65%"></i></div></div>
+        <div class="row"><div class="top">Python<span>Project + internship</span></div><div class="meter"><i style="width:55%"></i></div></div>
+      </div>
+    </div>
+    <div class="card">
+      <span class="eyebrow">How I work</span>
+      <div class="chips" style="margin:11px 0 16px">
+        <span class="chip">Time management</span><span class="chip">Adaptability</span><span class="chip">Teamwork</span>
+      </div>
+      <span class="eyebrow">Certifications</span>
+      <ul class="bullets" style="margin-top:9px">
+        <li>C Training — Spoken Tutorial</li>
+        <li>PHP and MySQL — Spoken Tutorial · 70%</li>
+        <li>Internet of Things — NPTEL · 45%</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="page" id="projects" hidden>
+  <div class="phead"><h2>StudyFlow</h2><span class="eyebrow">Project</span></div>
+  <div class="card feature">
+    <div>
+      <span class="eyebrow">Study priority &amp; academic planning system</span>
+      <h3 style="margin-top:7px">Tells you which subject to revise first</h3>
+    </div>
+    <p class="muted">Before exams every subject feels urgent, so nothing gets done well. StudyFlow takes each subject's exam date, credit weight, difficulty and current preparation level, scores them into one weighted priority number, and ranks them. The dashboard shows the ranked table, charts the weak areas, and exports the plan as CSV so it can be printed and stuck on a wall.</p>
+    <ul class="bullets">
+      <li>Weighted priority score from exam proximity, credits, difficulty and readiness.</li>
+      <li>Ranked table that reorders live as inputs change.</li>
+      <li>Plotly Express charts for subject-wise comparison.</li>
+      <li>CSV export of the generated study plan.</li>
+    </ul>
+    <div class="tags"><span>Python</span><span>Streamlit</span><span>Pandas</span><span>Plotly Express</span></div>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <span class="eyebrow">Internship work</span>
+    <h3 style="font-size:18px;margin:6px 0 7px">Python with Artificial Intelligence · Accent Techno Soft</h3>
+    <p class="muted">A 15-day programme covering Python fundamentals applied to AI basics — data handling, libraries and small model-driven exercises. It is what pushed me from classroom C into writing Python on my own.</p>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section class="page" id="education" hidden>
+  <div class="phead"><h2>Education</h2><span class="eyebrow">Timeline</span></div>
+  <div class="card">
+    <div class="tl">
+      <div class="it">
+        <div class="when">June 2024 — present</div>
+        <h3>Bachelor of Computer Technology</h3>
+        <p class="muted">Dr.N.G.P. Arts and Science College, Coimbatore · <b class="num">67%</b> aggregate up to semester 4.</p>
+      </div>
+      <div class="it">
+        <div class="when">15 days · internship</div>
+        <h3>Python with Artificial Intelligence</h3>
+        <p class="muted">Accent Techno Soft Company, Coimbatore.</p>
+      </div>
+      <div class="it">
+        <div class="when">2023 — 2024</div>
+        <h3>HSC</h3>
+        <p class="muted">Sri Vivekananda Matric Hr Sec School, Coimbatore · <b class="num">57.6%</b>.</p>
+      </div>
+      <div class="it">
+        <div class="when">2021 — 2022</div>
+        <h3>SSLC</h3>
+        <p class="muted">Sri Vivekananda Matric Hr Sec School, Coimbatore · <b class="num">45%</b>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESUME -->
+<section class="page" id="resume" hidden>
+  <div class="phead"><h2>Resume</h2><span class="eyebrow">One page</span></div>
+  <div class="actions noprint" style="margin-bottom:16px">
+    <button class="btn solid" id="printBtn" hidden>Print / Save as PDF</button>
+    <a class="btn" href="#documents">Certificates</a>
+  </div>
+  <div class="card noprint" id="upBox" hidden style="margin-bottom:16px">
+    <span class="eyebrow">Latest uploaded resume</span>
+    <p id="upName" style="margin:6px 0 11px;font-weight:600"></p>
+    <div class="actions" id="upActions"></div>
+  </div>
+  <div class="sheet">
+    <h1>PALANIVEL G</h1>
+    <div class="meta">Coimbatore, Tamil Nadu · +91 93445 63908 · palanivelg.tech@gmail.com<br>linkedin.com/in/palanivel-g-954401436</div>
+    <h3>Career objective</h3>
+    <p>To obtain an opportunity where I can use my technical knowledge and learn new skills, contribute to the organization's growth, and build practical experience toward a career in the IT field.</p>
+    <h3>Education</h3>
+    <p><b>Bachelor of Computer Technology</b> — Dr.N.G.P. Arts and Science College, Coimbatore · June 2024 – present · 67% up to semester 4.</p>
+    <p><b>HSC</b> — Sri Vivekananda Matric Hr Sec School, Coimbatore · 2023–2024 · 57.6%.</p>
+    <p><b>SSLC</b> — Sri Vivekananda Matric Hr Sec School, Coimbatore · 2021–2022 · 45%.</p>
+    <h3>Skills</h3>
+    <div class="two">
+      <p><b>Technical</b><br>C · SQL · DBMS · PHP &amp; MySQL · Python (Streamlit, Pandas)</p>
+      <p><b>Soft skills</b><br>Time management · Adaptability · Teamwork</p>
+    </div>
+    <h3>Project</h3>
+    <p><b>StudyFlow — Study Priority &amp; Academic Planning System</b> · Python, Streamlit, Pandas, Plotly Express</p>
+    <ul>
+      <li>Ranks exam subjects by a weighted priority score built from exam dates, credits, difficulty and preparation level.</li>
+      <li>Interactive dashboard with ranked table, Plotly charts and CSV export of the study plan.</li>
+    </ul>
+    <h3>Internship</h3>
+    <p><b>Python with Artificial Intelligence</b> — Accent Techno Soft Company · 15 days.</p>
+    <h3>Certifications</h3>
+    <ul>
+      <li>C Training — Spoken Tutorial</li>
+      <li>PHP and MySQL — Spoken Tutorial · 70%</li>
+      <li>Internet of Things — NPTEL · 45%</li>
+    </ul>
+    <h3>Languages</h3>
+    <p>Tamil · English</p>
+  </div>
+</section>
+
+<!-- DOCUMENTS -->
+<section class="page" id="documents" hidden>
+  <div class="phead"><h2>Documents</h2><span class="eyebrow">Password protected</span></div>
+  <div class="card">
+    <span class="eyebrow">Certificates &amp; marksheets</span>
+    <p class="note" style="margin:8px 0 14px">Files are encrypted with AES-GCM in the browser. Enter password to decrypt.</p>
+    <div class="gate">
+      <label class="fl">Document password
+        <input id="docPass" type="password" autocomplete="off" placeholder="Enter password">
+      </label>
+      <div class="inline">
+        <button class="btn solid" id="unlockBtn">Unlock</button>
+        <button class="btn" id="lockBtn" hidden>Lock again</button>
+      </div>
+      <p class="note" id="docNote"></p>
+    </div>
+    <div id="docList" class="grid" style="margin-top:18px" hidden></div>
+  </div>
+</section>
+
+<!-- UPDATE CENTER -->
+<section class="page" id="owner" hidden>
+  <div class="phead"><h2>Update center</h2><span class="eyebrow">Admin only</span></div>
+  <div class="card" id="adminGate">
+    <span class="eyebrow">Admin access</span>
+    <p class="note" style="margin:8px 0 14px">Enter admin PIN to upload documents or change resume.</p>
+    <div class="gate">
+      <label class="fl">Admin PIN<input id="pin" type="password" autocomplete="off" placeholder="PIN"></label>
+      <button class="btn solid" id="pinBtn">Open update center</button>
+      <p class="note" id="pinNote"></p>
+    </div>
+  </div>
+
+  <div id="adminPanel" hidden class="grid" style="gap:14px">
+    <div class="card">
+      <span class="eyebrow">Resume</span>
+      <h3 style="font-size:17px;margin:6px 0 10px">Replace the downloadable resume</h3>
+      <div class="gate" style="max-width:520px">
+        <input id="resumeFile" type="file" accept="application/pdf,.pdf">
+        <div class="inline">
+          <button class="btn solid" id="saveResume">Upload resume</button>
+          <button class="btn" id="dropResume">Remove</button>
+        </div>
+        <p class="note" id="resumeNote"></p>
+      </div>
+    </div>
+
+    <div class="card">
+      <span class="eyebrow">Certificates &amp; marksheets</span>
+      <h3 style="font-size:17px;margin:6px 0 10px">Encrypt and store documents</h3>
+      <div class="gate" style="max-width:520px">
+        <label class="fl">Folder
+          <select id="docCat">
+            <option>Semester 1 marksheet</option><option>Semester 2 marksheet</option>
+            <option>Semester 3 marksheet</option><option>Semester 4 marksheet</option>
+            <option>Semester 5 marksheet</option><option>Semester 6 marksheet</option>
+            <option>HSC marksheet</option><option>SSLC marksheet</option><option>Certificates</option>
+          </select>
+        </label>
+        <label class="fl">Document password (visitors will use this)
+          <input id="encPass" type="password" autocomplete="off" placeholder="Choose password">
+        </label>
+        <input id="docFiles" type="file" accept=".pdf,.jpg,.jpeg,.png" multiple>
+        <button class="btn solid" id="encBtn">Encrypt &amp; save</button>
+        <p class="note" id="encNote"></p>
+      </div>
+    </div>
+
+    <div class="card">
+      <span class="eyebrow">Stored documents</span>
+      <div id="adminList" class="grid" style="margin-top:10px;gap:7px"></div>
+      <div class="inline" style="margin-top:12px"><button class="btn" id="wipeBtn">Delete everything</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="page" id="contact" hidden>
+  <div class="phead"><h2>Contact</h2><span class="eyebrow">Get in touch</span></div>
+  <div class="grid g3">
+    <div class="card">
+      <span class="eyebrow">Email</span>
+      <p style="margin-top:7px;font-weight:600;overflow-wrap:anywhere">palanivelg.tech@gmail.com</p>
+      <button class="btn sm" style="margin-top:11px" data-copy="palanivelg.tech@gmail.com">Copy address</button>
+    </div>
+    <div class="card">
+      <span class="eyebrow">Phone</span>
+      <p style="margin-top:7px;font-weight:600">+91 93445 63908</p>
+      <button class="btn sm" style="margin-top:11px" data-copy="+919344563908">Copy number</button>
+    </div>
+    <div class="card">
+      <span class="eyebrow">LinkedIn</span>
+      <p style="margin-top:7px;font-weight:600">palanivel-g-954401436</p>
+      <a class="btn sm" style="margin-top:11px" target="_blank" rel="noopener" href="https://www.linkedin.com/in/palanivel-g-954401436">Open profile ↗</a>
+    </div>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <span class="eyebrow">Fastest way to reach me</span>
+    <p class="muted" style="margin-top:8px">Email with details on your role and team, and I will get back to you promptly. You can also chat directly with my interactive assistant.</p>
+    <button class="btn solid sm" style="margin-top:12px" id="aiOpen3">Ask Palanivel G</button>
+  </div>
+</section>
+
+<footer>
+  <span>© <span id="yr"></span> Palanivel G · Coimbatore</span>
+  <span class="eyebrow">Built from scratch · HTML, CSS, JS</span>
+</footer>
+</main>
+
+<button class="fab" id="fab">✦ Ask Palanivel G</button>
+<div class="scrim" id="scrim"></div>
+
+<aside class="ai" id="drawer" aria-label="Palanivel G Assistant" aria-hidden="true">
+  <div class="bar">
+    <div class="t">
+      <b>Palanivel G</b>
+      <small id="aiStatus">Portfolio Assistant</small>
+    </div>
+    <button class="icbtn" id="wipeChat" title="Clear chat" aria-label="Clear chat">⟳</button>
+    <button class="icbtn" id="aiClose" title="Close" aria-label="Close">✕</button>
+  </div>
+
+  <div class="stream" id="stream" aria-live="polite"></div>
+  <div class="sugg" id="sugg"></div>
+  <div class="compose">
+    <textarea id="ask" rows="1" placeholder="Ask about my skills, StudyFlow, education..." aria-label="Your question"></textarea>
+    <button class="icbtn" id="send" title="Send" aria-label="Send">↑</button>
+  </div>
+  <p class="foot" id="aiFoot">Answers are generated from Palanivel's profile data.</p>
+</aside>
+
+<script>
+"use strict";
+var CONFIG = {
+  OPENROUTER_MODEL: "openai/gpt-4o-mini",
+  ADMIN_PIN_SHA256: "4ff9198f1c0face3f5d6e8650cdc5801bfcb9c0399244dd46902abf8a617dfa2"
+};
+
+var STORE = { theme:"pg.theme", resume:"pg.resume", docs:"pg.docs" };
+
+var FACTS = [
+"Name: Palanivel G (Palani). Location: Coimbatore, Tamil Nadu, India.",
+"Contact: palanivelg.tech@gmail.com | +91 93445 63908 | linkedin.com/in/palanivel-g-954401436.",
+"Education: B.Sc Computer Technology (2024-Present, Dr.N.G.P. Arts & Science College, Coimbatore) - 67% aggregate (Sem 1-4). HSC: 57.6%, SSLC: 45% (Sri Vivekananda Hr Sec School).",
+"Tech Skills: C, SQL, DBMS, PHP, MySQL, Python (Streamlit, Pandas, Plotly Express). Soft Skills: Time management, Adaptability, Teamwork.",
+"Certifications: C Training (Spoken Tutorial), PHP & MySQL 70% (Spoken Tutorial), IoT 45% (NPTEL).",
+"Internship: 15-day Python with AI internship at Accent Techno Soft Company, Coimbatore.",
+"Project: StudyFlow - Study Priority System built with Python, Streamlit, Pandas, Plotly. Scores exam date, credits, difficulty, readiness into a priority rank.",
+"Languages: Tamil, English.",
+"Goal: Entry-level IT role or internship in 2026."
+].join("\n");
+
+var SYSTEM_PROMPT = 
+"You are Palanivel G responding in the 1st person ('I', 'my', 'me'). Be polite, helpful, clear, and professional. Always introduce yourself or respond naturally as Palanivel G. Strictly answer using this context:\n" + FACTS;
+
+function $(id){ return document.getElementById(id); }
+function esc(s){ return String(s).replace(/[&<>"']/g, function(c){
+  return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); }
+function ls(k, v){
+  try{ if(v === undefined) return localStorage.getItem(k);
+       if(v === null) localStorage.removeItem(k); else localStorage.setItem(k, v); }
+  catch(e){ return null; }
+}
+
+var SECTIONS = [
+  ["home","Home"],["about","Profile"],["skills","Skills"],["projects","Projects"],
+  ["education","Education"],["resume","Resume"],["documents","Documents"],
+  ["owner","Update center"],["contact","Contact"]
+];
+(function buildNav(){
+  var m = $("menu"), t = $("tabs");
+  SECTIONS.forEach(function(s, i){
+    var a = document.createElement("a");
+    a.href = "#" + s[0];
+    a.innerHTML = '<span class="ix">' + String(i+1).padStart(2,"0") + "</span>" + esc(s[1]);
+    m.appendChild(a);
+    var b = document.createElement("a");
+    b.href = "#" + s[0]; b.textContent = s[1];
+    t.appendChild(b);
+  });
+})();
+
+function route(){
+  var id = (location.hash || "").replace("#","");
+  if(!SECTIONS.some(function(s){ return s[0] === id; })) id = "home";
+  SECTIONS.forEach(function(s){
+    var el = $(s[0]); if(el) el.hidden = (s[0] !== id);
+  });
+  Array.prototype.forEach.call(document.querySelectorAll('#menu a, #tabs a'), function(a){
+    if(a.getAttribute("href") === "#" + id) a.setAttribute("aria-current","page");
+    else a.removeAttribute("aria-current");
+  });
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+window.addEventListener("hashchange", route);
+route();
+$("yr").textContent = new Date().getFullYear();
+
+(function theme(){
+  var saved = ls(STORE.theme);
+  if(saved === "dark" || saved === "light") document.documentElement.setAttribute("data-theme", saved);
+  function flip(){
+    var now = document.documentElement.getAttribute("data-theme");
+    if(!now) now = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    var next = now === "dark" ? "light" : "dark";
+    document.documentElement.setAttribute("data-theme", next);
+    ls(STORE.theme, next);
+  }
+  ["themeBtn","themeBtnM"].forEach(function(id){ var b = $(id); if(b) b.onclick = flip; });
+})();
+
+var drawer = $("drawer"), scrim = $("scrim"), stream = $("stream");
+var chatLog = [], busy = false;
+
+function openAI(){ drawer.classList.add("on"); scrim.classList.add("on"); setTimeout(function(){ $("ask").focus(); }, 300); }
+function closeAI(){ drawer.classList.remove("on"); scrim.classList.remove("on"); }
+["aiOpen","aiOpen2","aiOpen3","fab"].forEach(function(id){ var b = $(id); if(b) b.onclick = openAI; });
+$("aiClose").onclick = closeAI;
+scrim.onclick = closeAI;
+
+function push(role, text){
+  var b = document.createElement("div");
+  b.className = "bub " + (role === "me" ? "me" : role === "err" ? "err" : "bot");
+  b.innerHTML = esc(text);
+  stream.appendChild(b);
+  stream.scrollTop = stream.scrollHeight;
+  return b;
+}
+
+function initGreeting(){
+  stream.innerHTML = "";
+  chatLog = [];
+  push("ai", "Hi! I'm Palanivel G. Feel free to ask me anything about my skills, projects, or background!");
+}
+initGreeting();
+
+$("wipeChat").onclick = initGreeting;
+
+async function sendMessage(){
+  var input = $("ask"), q = input.value.trim();
+  if(!q || busy) return;
+
+  input.value = "";
+  push("me", q);
+  chatLog.push({role:"user", content:q});
+
+  busy = true;
+  $("send").disabled = true;
+  var bubble = push("ai", "Thinking...");
+
+  try {
+    // Calls your secure Vercel Serverless Function
+    var res = await fetch("/api/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        model: CONFIG.OPENROUTER_MODEL,
+        max_tokens: 250,
+        messages: [{ role: "system", content: SYSTEM_PROMPT }].concat(chatLog.slice(-4))
+      })
+    });
+
+    var data = await res.json();
+    if(!res.ok) throw new Error((data.error && data.error.message) || data.error || "Failed to reach AI service.");
+
+    var answer = data.choices[0].message.content;
+    bubble.textContent = answer;
+    chatLog.push({role:"assistant", content:answer});
+  } catch(err) {
+    bubble.className = "bub err";
+    bubble.textContent = "Error: " + err.message;
+  }
+  busy = false;
+  $("send").disabled = false;
+}
+
+$("send").onclick = sendMessage;
+$("ask").addEventListener("keydown", function(e){
+  if(e.key === "Enter" && !e.shiftKey){ e.preventDefault(); sendMessage(); }
+});
+</script>
+
+</body>
+</html>
