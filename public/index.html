@@ -464,7 +464,7 @@ footer{border-top:1px solid var(--line);padding:22px clamp(16px,4vw,54px) 40px;c
     <p class="note" style="margin:8px 0 14px">Files are encrypted with AES-GCM in the browser. Enter password to decrypt.</p>
     <div class="gate">
       <label class="fl">Document password
-        <input id="docPass" type="password" autocomplete="off" placeholder="Enter password">
+        <input id="docPass" type="password" autocomplete="off" value="palani26" placeholder="Enter password">
       </label>
       <div class="inline">
         <button class="btn solid" id="unlockBtn">Unlock</button>
@@ -483,7 +483,7 @@ footer{border-top:1px solid var(--line);padding:22px clamp(16px,4vw,54px) 40px;c
     <span class="eyebrow">Admin access</span>
     <p class="note" style="margin:8px 0 14px">Enter admin PIN to upload documents or change resume.</p>
     <div class="gate">
-      <label class="fl">Admin PIN<input id="pin" type="password" autocomplete="off" placeholder="PIN"></label>
+      <label class="fl">Admin PIN<input id="pin" type="password" autocomplete="off" value="palani26" placeholder="PIN"></label>
       <button class="btn solid" id="pinBtn">Open update center</button>
       <p class="note" id="pinNote"></p>
     </div>
@@ -516,7 +516,7 @@ footer{border-top:1px solid var(--line);padding:22px clamp(16px,4vw,54px) 40px;c
           </select>
         </label>
         <label class="fl">Document password (visitors will use this)
-          <input id="encPass" type="password" autocomplete="off" placeholder="Choose password">
+          <input id="encPass" type="password" autocomplete="off" value="palani26" placeholder="Choose password">
         </label>
         <input id="docFiles" type="file" accept=".pdf,.jpg,.jpeg,.png" multiple>
         <button class="btn solid" id="encBtn">Encrypt &amp; save</button>
@@ -591,7 +591,7 @@ footer{border-top:1px solid var(--line);padding:22px clamp(16px,4vw,54px) 40px;c
 "use strict";
 var CONFIG = {
   OPENROUTER_MODEL: "openai/gpt-4o-mini",
-  ADMIN_PIN_SHA256: "4ff9198f1c0face3f5d6e8650cdc5801bfcb9c0399244dd46902abf8a617dfa2"
+  ADMIN_PIN_SHA256: "1552a420b7bc1aa281e80ce6ec4adca84f72beaeef4ffccfb59bece51d7c2a7e"
 };
 
 var STORE = { theme:"pg.theme", resume:"pg.resume", docs:"pg.docs" };
@@ -707,7 +707,6 @@ async function sendMessage(){
   var bubble = push("ai", "Thinking...");
 
   try {
-    // Calls your secure Vercel Serverless Function
     var res = await fetch("/api/chat", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
